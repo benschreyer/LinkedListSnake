@@ -90,6 +90,15 @@ public:
 			{
 				if (snakeHead != iter && snakeHead->x == iter->x && snakeHead->y == iter->y)
 				{
+					
+					//clear memory used by body on snake death
+					iter = snakeHead->next;
+					while (iter != NULL)
+					{
+						temp = iter->next;
+						delete iter;
+						iter = temp;
+					}
 					OnUserCreate();
 					break;
 				}
@@ -120,8 +129,11 @@ public:
 		}
 		if (GetKey(olc::B).bPressed)
 		{
-			getLast(snakeHead)->next = new LinkedListElement;
-			length++;
+			for (int i = 0; i < 10; i++)
+			{
+				getLast(snakeHead)->next = new LinkedListElement;
+				length++;
+			}
 		}
 		return true;
 	}
